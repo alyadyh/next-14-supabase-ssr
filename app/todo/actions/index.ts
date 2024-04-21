@@ -19,6 +19,18 @@ export async function readTodo() {
     return await supabase.from("todo-demo").select("*");
 }
 
-export async function deleteTodoById(id: string) {}
+export async function deleteTodoById(id: string) {
+    const supabase = await createSupabaseServerClient();
+    
+    await supabase.from("todo-demo").delete().eq("id", id);
 
-export async function updateTodoById(id: string, completed: boolean) {}
+    revalidatePath("/todo");
+}
+
+export async function updateTodoById(id: string, completed: boolean) {
+    const supabase = await createSupabaseServerClient();
+    
+    await supabase.from("todo-demo").update({ completed }).eq("id", id);
+    
+    revalidatePath("/todo");
+}

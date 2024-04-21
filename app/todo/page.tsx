@@ -5,7 +5,7 @@ import { Button } from "@/components/ui/button";
 import readUserSession from "@/lib/actions";
 import { redirect } from "next/navigation";
 import SignOut from "./components/SignOut";
-import { readTodo } from "./actions";
+import { deleteTodoById, readTodo, updateTodoById } from "./actions";
 
 export default async function Page() {
 	const {data} = await readUserSession()
@@ -23,6 +23,8 @@ export default async function Page() {
 				<CreateForm />
 
 				{todos?.map((todo, index) => {
+					const deleteTodo = deleteTodoById.bind(null, todo.id)
+					const updateTodo = updateTodoById.bind(null, todo.id, !todo.completed)
 					return (
 						<div key={index} className="flex items-center gap-6">
 							<h1
@@ -33,8 +35,13 @@ export default async function Page() {
 								{todo.title}
 							</h1>
 
-							<Button>delete</Button>
-							<Button>Update</Button>
+							<form action={deleteTodo}>
+								<Button>delete</Button>
+							</form>
+
+							<form action={updateTodo}>
+								<Button>Update</Button>
+							</form>
 						</div>
 					);
 				})}
