@@ -1,4 +1,4 @@
-'use client'
+"use client";
 
 import { Button } from "@/components/ui/button";
 import React from "react";
@@ -14,9 +14,9 @@ export default function OAuthForm() {
 		supabase.auth.signInWithOAuth({
 			provider: "github",
 			options: {
-				redirectTo: `${location.origin}/auth-server-action/callback`
+				redirectTo: `${location.origin}/auth-server-action/callback`,
 			},
 		});
-	}
+	};
 	return <Button className="w-full" onClick={loginWithGithub}>Login With Github</Button>;
 }
